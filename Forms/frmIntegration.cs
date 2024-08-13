@@ -4,46 +4,54 @@ namespace filezilla_integrate
 {
     public partial class frmIntegration : Form
     {
-        private FilezillaIntegrate _filezillaIntegrate;
-        private readonly string remoteFile = "/usr/local/olos_vpl/conf/dialplan/public/";
+        private FilezillaIntegrate? _filezillaIntegrate;
 
         public frmIntegration()
         {
             InitializeComponent();
+            hideObjects(false);
+        }
 
+        private void LoadIntegration()
+        {
             Credentials credentials = new Credentials
             {
-                Sftp = "10.15.15.195",  //txtSftp.Text,
-                User = "olos",          //txtUser.Text,
-                Pass = "skyl!n&GTR",    //txtPass.Text;
-                Port = 22               //int.Parse(txtPort.Text);
+                Sftp = txtSftp.Text.Trim(),
+                User = txtUser.Text.Trim(),
+                Pass = txtPass.Text.Trim(),
+                Port = int.Parse(txtPort.Text.Trim())
             };
-            hideObjects(false);
             _filezillaIntegrate = new FilezillaIntegrate(credentials);
         }
 
         #region Events
-        private void txtUpload_TextChanged(object sender, EventArgs e)
+        private void txtOrigin_TextChanged(object sender, EventArgs e)
         {
-            btnUpload.Enabled = (txtUpload.Text.EndsWith("\\")) ? true : false;
+            btnUpload.Enabled = (txtOrigin.Text.EndsWith("\\") && txtRemote.Text.EndsWith("/")) ? true : false;
         }
 
         private void txtFile_TextChanged(object sender, EventArgs e)
         {
-            btnDialplan.Enabled = (txtFile.Text.Contains(".xml")) ? true : false;
+            btnDialplan.Enabled = (txtFile.Text.Contains(".xml") && txtRemote.Text.EndsWith("/")) ? true : false;
         }
 
         private void txtListCommand_TextChanged(object sender, EventArgs e)
         {
             btnListAll.Enabled = (txtListCommand.Text.EndsWith("/")) ? true : false;
         }
+
+        private void txtPort_TextChanged(object sender, EventArgs e)
+        {
+            btnEnter.Enabled = txtPort.Text.Length != 0 && int.TryParse(txtPort.Text, out _) ? true : false;
+        }
         #endregion
 
         private void btnEnter_Click(object sender, EventArgs e)
         {
+            LoadIntegration();
             try
             {
-                _filezillaIntegrate.SftpConnect();
+                _filezillaIntegrate!.SftpConnect();
                 _filezillaIntegrate.sshConnect();
                 txtStatus.Text = "Connected to " + _filezillaIntegrate._credentials.Sftp;
                 hideObjects(true);
@@ -54,16 +62,17 @@ namespace filezilla_integrate
         private void btnUpload_Click(object sender, EventArgs e)
         {
             txtStatus.Clear();
-            string validBar = txtUpload.Text.Substring(Path.GetDirectoryName(txtUpload.Text)!.Length + 1, 1);
-            string localFile = validBar != "\\" ? txtUpload.Text + "\\" : txtUpload.Text;
-            //string remoteFile = "/usr/local/olos_vpl/conf/dialplan/public/";//"/home/olos/Workspace/";
-            bool integrate = _filezillaIntegrate.SftpUpload(localFile, remoteFile, txtFile.Text);
+            string validOrigin = txtOrigin.Text.Trim().Substring(Path.GetDirectoryName(txtOrigin.Text)!.Length + 1, 1);
+            string localFile = validOrigin != "\\" ? txtOrigin.Text + "\\" : txtOrigin.Text;
+
+            string validRemote = txtRemote.Text.Trim().Substring(txtRemote.Text.Length - 1, 1);
+            string remoteFile = validRemote != "/" ? txtRemote.Text + "/" : txtRemote.Text;
+            bool integrate = _filezillaIntegrate!.SftpUpload(localFile, remoteFile, txtFile.Text);
 
             txtStatus.Text = (integrate) ? "File uploaded" : "File not found";
             btnReload.Visible = (integrate) ? true : false;
             txtReload.Visible = (integrate) ? true : false;
             btnUpload.Enabled = false;
-            //quando clicar no upload, configurar para mostrar o botão de reload e listall
         }
 
         #region Drag and Drop
@@ -75,24 +84,22 @@ namespace filezilla_integrate
             if (valid)
             {
                 txtFile.Visible = true;
-                txtUpload.Visible = true;
+                txtOrigin.Visible = true;
                 lblUpload.Visible = true;
                 btnUpload.Visible = true;
                 btnDialplan.Visible = true;
 
-                txtListAll.Enabled = true;
                 btnListAll.Enabled = true;
+                txtListCommand.Enabled = true;
+                txtRemote.Visible = true;
+                btnDisconnect.Visible = true;
 
-                txtSftp.Enabled = false;
-                txtUser.Enabled = false;
-                txtPass.Enabled = false;
-                txtPort.Enabled = false;
-                btnEnter.Enabled = false;
+                btnExit.Visible = false;
             }
             else
             {
                 txtFile.Visible = false;
-                txtUpload.Visible = false;
+                txtOrigin.Visible = false;
                 lblUpload.Visible = false;
                 btnUpload.Visible = false;
                 btnUpload.Enabled = false;
@@ -100,8 +107,14 @@ namespace filezilla_integrate
                 txtReload.Visible = false;
                 btnDialplan.Visible = false;
                 btnDialplan.Enabled = false;
-                txtListAll.Enabled = false;
+                txtListCommand.Enabled = false;
                 btnListAll.Enabled = false;
+                txtStatus.Enabled = false;
+                txtRemote.Visible = false;
+                btnDisconnect.Visible = false;
+
+                btnExit.Visible = true;
+                btnEnter.Enabled = false;
             }
         }
         #endregion
@@ -109,12 +122,12 @@ namespace filezilla_integrate
         private void btnReload_Click(object sender, EventArgs e)
         {
             txtStatus.Clear();
-            txtStatus.Text = _filezillaIntegrate.sshExecute(txtReload.Text);
+            txtStatus.Text = _filezillaIntegrate!.sshExecute(txtReload.Text);
         }
 
         private void btnListAll_Click(object sender, EventArgs e)
         {
-            foreach (string txt in _filezillaIntegrate.sshListAll(txtListCommand.Text))
+            foreach (string txt in _filezillaIntegrate!.sshListAll(txtListCommand.Text))
             {
                 txtListAll.Text += txt;
             }
@@ -122,13 +135,13 @@ namespace filezilla_integrate
 
         private void btnDisconnect_Click(object sender, EventArgs e)
         {
-            _filezillaIntegrate.Disconnect();
+            _filezillaIntegrate!.Disconnect();
             Environment.Exit(0);
         }
 
         private void btnDialplan_Click(object sender, EventArgs e)
         {
-            frmDialplan dialplan = new frmDialplan(_filezillaIntegrate, txtFile.Text, remoteFile);
+            frmDialplan dialplan = new frmDialplan(_filezillaIntegrate!, txtFile.Text, txtRemote.Text);
             dialplan.ShowDialog();
 
             if (dialplan.reload)
@@ -138,63 +151,19 @@ namespace filezilla_integrate
 
                 txtReload.Visible = true;
             }
+            else
+            {
+                btnReload.Enabled = false;
+                btnReload.Visible = false;
+
+                txtReload.Visible = false;
+            }
         }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
     }
 }
-
-#region old_code
-/*
-         private void btnReload_Click(object sender, EventArgs e)
-        {
-            SshClient sshClient = new SshClient(
-                _filezillaIntegrate._credentials.Sftp,
-                _filezillaIntegrate._credentials.Port,
-                _filezillaIntegrate._credentials.User,
-                _filezillaIntegrate._credentials.Pass
-                );
-            sshClient.Connect();
-
-            var stream = sshClient.CreateShellStream("vt-100", 80, 24, 800, 600, 1024);
-            //            stream.WriteLine("olos_vpl_cli -x \"reloadxml\"");
-            stream.WriteLine(txtReload.Text);
-
-            List<string> resultExec = new List<string>();
-            string line;
-            while ((line = stream.ReadLine(TimeSpan.FromSeconds(2))!) != null)
-            {
-                resultExec.Add(line + Environment.NewLine);
-                // if a termination pattern is known, check it here and break to exit immediately
-            }
-
-            foreach (string txt in resultExec)
-            {
-                if (txt.ToUpper().Contains("SUCCESS")) txtStatus.Text = txt.ToUpper();
-            }
-
-            stream.Close();
-            sshClient.Disconnect();
-        }
-
-        private void btnListAll_Click(object sender, EventArgs e)
-        {
-            SshClient sshClient = new SshClient(
-                _filezillaIntegrate._credentials.Sftp,
-                _filezillaIntegrate._credentials.Port,
-                _filezillaIntegrate._credentials.User,
-                _filezillaIntegrate._credentials.Pass
-                );
-            sshClient.Connect();
-
-            string command = "cd /usr/local/olos_vpl/conf/dialplan/public && ls -lh"; //home/olos/Workspace && ls -lh";
-            
-            SshCommand sshCommand = sshClient.RunCommand(command);
-            var result = sshCommand.Execute().Split("\n");
-            
-            foreach (string txt in result)
-            {
-                txtListAll.Text += txt + Environment.NewLine;
-            }
-            sshClient.Disconnect();
-        }
- */
-#endregion

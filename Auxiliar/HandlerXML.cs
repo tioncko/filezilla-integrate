@@ -8,10 +8,9 @@ namespace filezilla_integrate.Auxiliar
 {
     internal class HandlerXML
     {
-        public FieldDialplan returnFields (string origin) {
-
+        public FieldDialplan returnFields (string origin) 
+        {
             string value = "";
-
             Dialplan edit = Deserialize(origin);
             FieldDialplan fields = new FieldDialplan();
 
@@ -49,38 +48,30 @@ namespace filezilla_integrate.Auxiliar
             return fields;
         }
 
-        // if (value.StartsWith("X-customerId: ")) { layout = "X-customerId: "; fields1[0] = value.Substring(layout.Length); }
-
-        public string EditXML(FieldDialplan fields, string origin) {
-
+        public string EditXML(FieldDialplan fields, string origin) 
+        {
             Dialplan edit = Deserialize(origin);
 
             edit.Extensions!.ForEach(
                 ex => ex.Conditions!.ForEach(
                     cd => {
-                        if (cd.Field!.Contains("destination_number")) cd.Expression = fields.Dialplan;
+                        if (cd.Field!.Contains("destination_number")) cd.Expression = String.Format("^{0}$", fields.Dialplan);
                         if (cd.Action != null)
                         {
                             cd.Action!.ForEach(
                                 ac => {
                                     if (ac.Data!.StartsWith("destInboundCampaign="))
                                         ac.Data = $"destInboundCampaign={fields.DestInboundCampaign}";
-                                    //ac.Data = String.Format("destInboundCampaign={0}, destInboundCampaign);
                                     if (ac.Data!.StartsWith("nameMailingField="))
                                         ac.Data = $"nameMailingField={fields.NameMailingField}";
-                                    //ac.Data = String.Format("nameMailingField={0}, nameMailingField);
                                     if (ac.Data!.StartsWith("announcer="))
                                         ac.Data = $"announcer={fields.Announcer}";
-                                    //ac.Data = String.Format("announcer={0}, announcer);
                                     if (ac.Data!.StartsWith("persona="))
                                         ac.Data = $"persona={fields.Persona}";
-                                    //ac.Data = String.Format("persona={0}, persona);
                                     if (ac.Data!.StartsWith("genderAnnouncer="))
                                         ac.Data = $"genderAnnouncer={fields.GenderAnnouncer.ToString()}";
-                                    //ac.Data = String.Format("genderAnnouncer={0}, genderAnnouncer);
                                     if (ac.Data!.StartsWith("enable8Personas="))
                                         ac.Data = $"enable8Personas={fields.Enable8Personas.ToString()!.ToLower()}";
-                                    //ac.Data = String.Format("enable8Personas={0}, enable8Personas.ToString().ToLower());
                                 }
                             );
                         }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nicsil\\Documents\\Personal\\CODES\\C#\\dotNet_v6\\filezilla-integrate\\filezilla-integrate.csproj": {}
+    "C:\\Users\\nicsil\\Documents\\Personal\\CODES\\C#\\dotNet_v6\\00-Antigos\\filezilla-integrate_v0\\filezilla-integrate.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nicsil\\Documents\\Personal\\CODES\\C#\\dotNet_v6\\filezilla-integrate\\filezilla-integrate.csproj": {
+    "C:\\Users\\nicsil\\Documents\\Personal\\CODES\\C#\\dotNet_v6\\00-Antigos\\filezilla-integrate_v0\\filezilla-integrate.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nicsil\\Documents\\Personal\\CODES\\C#\\dotNet_v6\\filezilla-integrate\\filezilla-integrate.csproj",
+        "projectUniqueName": "C:\\Users\\nicsil\\Documents\\Personal\\CODES\\C#\\dotNet_v6\\00-Antigos\\filezilla-integrate_v0\\filezilla-integrate.csproj",
         "projectName": "filezilla-integrate",
-        "projectPath": "C:\\Users\\nicsil\\Documents\\Personal\\CODES\\C#\\dotNet_v6\\filezilla-integrate\\filezilla-integrate.csproj",
+        "projectPath": "C:\\Users\\nicsil\\Documents\\Personal\\CODES\\C#\\dotNet_v6\\00-Antigos\\filezilla-integrate_v0\\filezilla-integrate.csproj",
         "packagesPath": "C:\\Users\\nicsil\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nicsil\\Documents\\Personal\\CODES\\C#\\dotNet_v6\\filezilla-integrate\\obj\\",
+        "outputPath": "C:\\Users\\nicsil\\Documents\\Personal\\CODES\\C#\\dotNet_v6\\00-Antigos\\filezilla-integrate_v0\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -27,9 +27,10 @@
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
-          "http://10.15.15.55:8081/OlosNugetServer/nuget": {},
-          "http://10.15.15.55:8081/OlosNugetServerOPS/nuget": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://10.15.15.55:8081/OlosNugetServer/nuget": {},
+          "https://10.15.15.55:8081/OlosNugetServerOPS/nuget": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.pkg.github.com/OlosCore/index.json": {}
         },
         "frameworks": {
           "net6.0-windows7.0": {

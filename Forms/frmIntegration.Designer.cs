@@ -34,7 +34,7 @@
             txtPort = new TextBox();
             txtUser = new TextBox();
             txtStatus = new TextBox();
-            txtUpload = new TextBox();
+            txtOrigin = new TextBox();
             btnEnter = new Button();
             btnUpload = new Button();
             lblSftp = new Label();
@@ -53,6 +53,8 @@
             lblFilezilla = new Label();
             pbxFilezilla = new PictureBox();
             label1 = new Label();
+            txtRemote = new TextBox();
+            btnExit = new Button();
             ((System.ComponentModel.ISupportInitialize)pbxFilezilla).BeginInit();
             SuspendLayout();
             // 
@@ -73,6 +75,7 @@
             txtPass.Location = new Point(84, 118);
             txtPass.Multiline = true;
             txtPass.Name = "txtPass";
+            txtPass.PasswordChar = '*';
             txtPass.Size = new Size(192, 25);
             txtPass.TabIndex = 2;
             // 
@@ -84,6 +87,7 @@
             txtPort.Name = "txtPort";
             txtPort.Size = new Size(57, 25);
             txtPort.TabIndex = 3;
+            txtPort.TextChanged += txtPort_TextChanged;
             // 
             // txtUser
             // 
@@ -101,34 +105,34 @@
             txtStatus.Multiline = true;
             txtStatus.Name = "txtStatus";
             txtStatus.ScrollBars = ScrollBars.Vertical;
-            txtStatus.Size = new Size(267, 76);
+            txtStatus.Size = new Size(267, 80);
             txtStatus.TabIndex = 4;
             // 
-            // txtUpload
+            // txtOrigin
             // 
-            txtUpload.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            txtUpload.Location = new Point(116, 187);
-            txtUpload.Multiline = true;
-            txtUpload.Name = "txtUpload";
-            txtUpload.Size = new Size(496, 37);
-            txtUpload.TabIndex = 5;
-            txtUpload.TextChanged += txtUpload_TextChanged;
+            txtOrigin.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            txtOrigin.Location = new Point(116, 178);
+            txtOrigin.Multiline = true;
+            txtOrigin.Name = "txtOrigin";
+            txtOrigin.Size = new Size(496, 25);
+            txtOrigin.TabIndex = 0;
+            txtOrigin.TextChanged += txtOrigin_TextChanged;
             // 
             // btnEnter
             // 
             btnEnter.Location = new Point(282, 121);
             btnEnter.Name = "btnEnter";
             btnEnter.Size = new Size(57, 22);
-            btnEnter.TabIndex = 0;
+            btnEnter.TabIndex = 4;
             btnEnter.Text = "Enter";
             btnEnter.UseVisualStyleBackColor = true;
             btnEnter.Click += btnEnter_Click;
             // 
             // btnUpload
             // 
-            btnUpload.Location = new Point(26, 187);
+            btnUpload.Location = new Point(26, 177);
             btnUpload.Name = "btnUpload";
-            btnUpload.Size = new Size(83, 37);
+            btnUpload.Size = new Size(83, 57);
             btnUpload.TabIndex = 0;
             btnUpload.Text = "Upload";
             btnUpload.UseVisualStyleBackColor = true;
@@ -168,7 +172,7 @@
             // 
             lblUpload.AutoSize = true;
             lblUpload.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lblUpload.Location = new Point(26, 163);
+            lblUpload.Location = new Point(26, 153);
             lblUpload.Name = "lblUpload";
             lblUpload.Size = new Size(84, 21);
             lblUpload.TabIndex = 12;
@@ -187,11 +191,11 @@
             // txtFile
             // 
             txtFile.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            txtFile.Location = new Point(115, 230);
+            txtFile.Location = new Point(116, 240);
             txtFile.Multiline = true;
             txtFile.Name = "txtFile";
             txtFile.Size = new Size(497, 25);
-            txtFile.TabIndex = 6;
+            txtFile.TabIndex = 0;
             txtFile.TextChanged += txtFile_TextChanged;
             // 
             // btnReload
@@ -247,9 +251,9 @@
             // 
             // btnDisconnect
             // 
-            btnDisconnect.Location = new Point(1061, 24);
+            btnDisconnect.Location = new Point(1018, 17);
             btnDisconnect.Name = "btnDisconnect";
-            btnDisconnect.Size = new Size(83, 21);
+            btnDisconnect.Size = new Size(83, 32);
             btnDisconnect.TabIndex = 19;
             btnDisconnect.Text = "Disconnect";
             btnDisconnect.UseVisualStyleBackColor = true;
@@ -257,7 +261,7 @@
             // 
             // btnDialplan
             // 
-            btnDialplan.Location = new Point(27, 229);
+            btnDialplan.Location = new Point(27, 239);
             btnDialplan.Name = "btnDialplan";
             btnDialplan.Size = new Size(82, 26);
             btnDialplan.TabIndex = 20;
@@ -295,12 +299,33 @@
             label1.TabIndex = 23;
             label1.Text = "Directory";
             // 
+            // txtRemote
+            // 
+            txtRemote.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            txtRemote.Location = new Point(116, 209);
+            txtRemote.Multiline = true;
+            txtRemote.Name = "txtRemote";
+            txtRemote.Size = new Size(496, 25);
+            txtRemote.TabIndex = 0;
+            // 
+            // btnExit
+            // 
+            btnExit.Location = new Point(1107, 17);
+            btnExit.Name = "btnExit";
+            btnExit.Size = new Size(47, 32);
+            btnExit.TabIndex = 25;
+            btnExit.Text = "Exit";
+            btnExit.UseVisualStyleBackColor = true;
+            btnExit.Click += btnExit_Click;
+            // 
             // frmIntegration
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
             ClientSize = new Size(1174, 321);
+            Controls.Add(btnExit);
+            Controls.Add(txtRemote);
             Controls.Add(label1);
             Controls.Add(pbxFilezilla);
             Controls.Add(lblFilezilla);
@@ -319,7 +344,7 @@
             Controls.Add(lblSftp);
             Controls.Add(btnUpload);
             Controls.Add(btnEnter);
-            Controls.Add(txtUpload);
+            Controls.Add(txtOrigin);
             Controls.Add(txtStatus);
             Controls.Add(txtUser);
             Controls.Add(txtPort);
@@ -344,7 +369,7 @@
         private TextBox txtPort;
         private TextBox txtUser;
         private TextBox txtStatus;
-        private TextBox txtUpload;
+        private TextBox txtOrigin;
         private Button btnEnter;
         private Button btnUpload;
         private Label lblSftp;
@@ -363,5 +388,7 @@
         private Label lblFilezilla;
         private PictureBox pbxFilezilla;
         private Label label1;
+        private TextBox txtRemote;
+        private Button btnExit;
     }
 }

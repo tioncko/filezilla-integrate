@@ -4,11 +4,5 @@
     <Compile Update="Forms\frmDialplan.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\frmIntegration.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\frmXML.cs">
-      <SubType>Form</SubType>
-    </Compile>
   </ItemGroup>
 </Project>

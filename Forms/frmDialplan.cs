@@ -19,20 +19,10 @@ namespace filezilla_integrate
             this._file = file;
             this._remoteFile = remoteFile;
 
-            loadDialplan2();
+            loadDialplan();
         }
 
         private void loadDialplan()
-        {
-            foreach (string txt in _filezillaIntegrate.openDialplan(_file, _remoteFile))
-            {
-                txtDialplan.Text += txt;
-                dialplan += txt;
-            }
-        }
-
-        
-         private void loadDialplan2() 
         {
             _filezillaIntegrate.openDialplan(_file, _remoteFile).ForEach(x => dialplan += x);
 
@@ -47,49 +37,56 @@ namespace filezilla_integrate
             txtDialField06.Text = fields.GenderAnnouncer.ToString();
             txtDialField07.Text = fields.Enable8Personas.ToString();
         }
-         
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void btnUpdate_Click(object sender, EventArgs e)
         {
-            string newdialplan = txtDialplan.Text;
+            FieldDialplan fields = new FieldDialplan
+            {
+                Dialplan = txtDialField01.Text,
+                DestInboundCampaign = int.Parse(txtDialField02.Text),
+                NameMailingField = txtDialField03.Text,
+                Announcer = txtDialField04.Text,
+                Persona = txtDialField05.Text,
+                GenderAnnouncer = Convert.ToChar(txtDialField06.Text),
+                Enable8Personas = Convert.ToBoolean(txtDialField07.Text)
+            };
 
-            
-                    HandlerXML xml = new HandlerXML();
-                    FieldDialplan fields = new FieldDialplan
-                    {/* 
-                        Dialplan = String.Format("^{0}$", "GNICODELLI_18"),
-                        DestInboundCampaign = 13,
-                        NameMailingField = "AD_NOME",
-                        Announcer = "Rodrigo_Goes",
-                        Persona = "Caio",
-                        GenderAnnouncer = 'M',
-                        Enable8Personas = true,
-                    */
-                        Dialplan = txtDialField01.Text,
-                        DestInboundCampaign = int.Parse(txtDialField02.Text),
-                        NameMailingField = txtDialField03.Text,
-                        Announcer = txtDialField04.Text,
-                        Persona = txtDialField05.Text,
-                        GenderAnnouncer = Convert.ToChar(txtDialField06.Text),
-                        Enable8Personas = Convert.ToBoolean(txtDialField07.Text)
-                    };
-
-                if (_filezillaIntegrate.editDialplan(_file, _remoteFile, dialplan!, fields))
-            
-
-
-            //if (_filezillaIntegrate.editDialplan(_file, _remoteFile, dialplan!, newdialplan))
+            if (_filezillaIntegrate.editDialplan(_file, _remoteFile, dialplan!, fields))
             {
                 MessageBox.Show("Dialplan saved successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
                 reload = true;
             }
-            else MessageBox.Show("Dialplan failed to save", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);            
+            else MessageBox.Show("Dialplan failed to save", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void btnDuplicate_Click(object sender, EventArgs e)
+        {
+            FieldDialplan fields = new FieldDialplan
+            {
+                Dialplan = txtDialField01.Text,
+                DestInboundCampaign = int.Parse(txtDialField02.Text),
+                NameMailingField = txtDialField03.Text,
+                Announcer = txtDialField04.Text,
+                Persona = txtDialField05.Text,
+                GenderAnnouncer = Convert.ToChar(txtDialField06.Text),
+                Enable8Personas = Convert.ToBoolean(txtDialField07.Text)
+            };
+
+            if (_filezillaIntegrate.editDialplan(String.Format("{0}.xml", fields.Dialplan), _remoteFile, dialplan!, fields))
+            {
+                MessageBox.Show("Dialplan saved successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+                reload = true;
+            }
+            else MessageBox.Show("Dialplan failed to save", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
+            reload = false;
             this.Close();
         }
+
     }
 }

@@ -97,7 +97,7 @@ namespace filezilla_integrate
         {
             List<string> view = new List<string>();
             if (ssh!.IsConnected) {
-                SshCommand sshCommand = ssh.CreateCommand("cd " + command + " && ls -lh");
+                SshCommand sshCommand = ssh.CreateCommand(String.Format("cd {0} && ls -lh", command));
                 var result = sshCommand.Execute().Split("\n");
 
                 foreach (string txt in result)
@@ -108,12 +108,12 @@ namespace filezilla_integrate
             return view;
         }
 
-        public List<string> openDialplan(string file, string remoteFile)
+        public List<string> openDialplan(string file, string remote)
         {
             //SshCommand é um recurso que permite a execução de comandos ssh no servidor remoto e captura a saída do comando em um objeto
             List<string> view = new List<string>();
             if (ssh!.IsConnected) {
-                SshCommand sshCommand = ssh.CreateCommand("cd " + remoteFile + " && cat " + file);
+                SshCommand sshCommand = ssh.CreateCommand(String.Format("cd {0} && cat {1}", remote, file));
                 var result = sshCommand.Execute().Split("\n");
 
                 foreach (string txt in result)
@@ -124,21 +124,19 @@ namespace filezilla_integrate
             return view;
         }
 
-        public bool editDialplan(string file, string remoteFile, string olddial, FieldDialplan fields)
-        //public bool editDialplan(string file, string remoteFile, string olddial, string newdial) 
+        public bool editDialplan(string file, string remote, string dial, FieldDialplan fields)
         {            
             if (client!.IsConnected) 
             {
                 Encoding encoding = Encoding.UTF8;
                 HandlerXML xml = new HandlerXML();
-                string fileContent = xml.EditXML(fields, olddial);
-                //string fileContent = olddial.Replace(olddial, newdial);
+                string fileContent = xml.EditXML(fields, dial);
                 byte[] fileUpdate = encoding.GetBytes(fileContent);
 
                 //MemoryStream é um recursos que permite a leitura e escrita de bytes em um array de bytes
                 using (MemoryStream fileUpdateMemory = new MemoryStream(fileUpdate)) 
                 {
-                    client.UploadFile(fileUpdateMemory, remoteFile + file, true);
+                    client.UploadFile(fileUpdateMemory, remote + file, true);
                     return true;
                 }                
             }

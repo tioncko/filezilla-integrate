@@ -56,11 +56,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\nicsil\\Documents\\Personal\\CODES\\C#\\dotNet_v6\\filezilla-integrate\\filezilla-integrate.csproj",
+      "projectUniqueName": "C:\\Users\\nicsil\\Documents\\Personal\\CODES\\C#\\dotNet_v6\\00-Antigos\\filezilla-integrate_v0\\filezilla-integrate.csproj",
       "projectName": "filezilla-integrate",
-      "projectPath": "C:\\Users\\nicsil\\Documents\\Personal\\CODES\\C#\\dotNet_v6\\filezilla-integrate\\filezilla-integrate.csproj",
+      "projectPath": "C:\\Users\\nicsil\\Documents\\Personal\\CODES\\C#\\dotNet_v6\\00-Antigos\\filezilla-integrate_v0\\filezilla-integrate.csproj",
       "packagesPath": "C:\\Users\\nicsil\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\nicsil\\Documents\\Personal\\CODES\\C#\\dotNet_v6\\filezilla-integrate\\obj\\",
+      "outputPath": "C:\\Users\\nicsil\\Documents\\Personal\\CODES\\C#\\dotNet_v6\\00-Antigos\\filezilla-integrate_v0\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -76,9 +76,10 @@
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "C:\\Program Files\\dotnet\\library-packs": {},
-        "http://10.15.15.55:8081/OlosNugetServer/nuget": {},
-        "http://10.15.15.55:8081/OlosNugetServerOPS/nuget": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "https://10.15.15.55:8081/OlosNugetServer/nuget": {},
+        "https://10.15.15.55:8081/OlosNugetServerOPS/nuget": {},
+        "https://api.nuget.org/v3/index.json": {},
+        "https://nuget.pkg.github.com/OlosCore/index.json": {}
       },
       "frameworks": {
         "net6.0-windows7.0": {
@@ -128,19 +129,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1803",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Você está executando a operação 'restore' com uma fonte 'HTTP', 'http://10.15.15.55:8081/OlosNugetServer/nuget'. O acesso não HTTPS será removido em uma versão futura. Considere migrar para uma fonte 'HTTPS'."
-    },
-    {
-      "code": "NU1803",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Você está executando a operação 'restore' com uma fonte 'HTTP', 'http://10.15.15.55:8081/OlosNugetServerOPS/nuget'. O acesso não HTTPS será removido em uma versão futura. Considere migrar para uma fonte 'HTTPS'."
-    }
-  ]
+  }
 }

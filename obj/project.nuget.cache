@@ -1,23 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "ZaJBJht3abo=",
+  "dgSpecHash": "blBIiM1V4HE=",
   "success": true,
-  "projectFilePath": "C:\\Users\\nicsil\\Documents\\Personal\\CODES\\C#\\dotNet_v6\\filezilla-integrate\\filezilla-integrate.csproj",
+  "projectFilePath": "C:\\Users\\nicsil\\Documents\\Personal\\CODES\\C#\\dotNet_v6\\00-Antigos\\filezilla-integrate_v0\\filezilla-integrate.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nicsil\\.nuget\\packages\\ssh.net\\2024.1.0\\ssh.net.2024.1.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1803",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Você está executando a operação 'restore' com uma fonte 'HTTP', 'http://10.15.15.55:8081/OlosNugetServer/nuget'. O acesso não HTTPS será removido em uma versão futura. Considere migrar para uma fonte 'HTTPS'."
-    },
-    {
-      "code": "NU1803",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Você está executando a operação 'restore' com uma fonte 'HTTP', 'http://10.15.15.55:8081/OlosNugetServerOPS/nuget'. O acesso não HTTPS será removido em uma versão futura. Considere migrar para uma fonte 'HTTPS'."
-    }
-  ]
+  "logs": []
 }
